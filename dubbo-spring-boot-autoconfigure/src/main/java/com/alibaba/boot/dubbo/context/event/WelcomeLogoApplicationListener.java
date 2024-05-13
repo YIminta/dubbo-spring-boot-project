@@ -45,18 +45,19 @@ public class WelcomeLogoApplicationListener implements ApplicationListener<Appli
 
     @Override
     public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
-
+        // 已经处理过了就跳过
         // Skip if processed before, prevent duplicated execution in Hierarchical ApplicationContext
         if (processed.get()) {
             return;
         }
 
         /**
+         * 获得 Logger 对象
          * Gets Logger After LoggingSystem configuration ready
          * @see LoggingApplicationListener
          */
         final Logger logger = LoggerFactory.getLogger(getClass());
-
+        // 获得 Dubbo Banner 文本
         String bannerText = buildBannerText();
 
         if (logger.isInfoEnabled()) {
@@ -66,6 +67,7 @@ public class WelcomeLogoApplicationListener implements ApplicationListener<Appli
         }
 
         // mark processed to be true
+        // 标记已执行
         processed.compareAndSet(false, true);
     }
 
